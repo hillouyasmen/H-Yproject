@@ -1,0 +1,17 @@
+.cart-icon {
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+  color: inherit;
+}
+
+.cart-icon:hover {
+  opacity: 0.8;
+}
+
+/* Badge styles */
+.MuiBadge-badge {
+  background-color: #ff4444;
+  color: white;
+  font-weight: bold;
+}

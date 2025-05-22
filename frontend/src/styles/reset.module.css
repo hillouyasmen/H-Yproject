@@ -1,0 +1,44 @@
+/* styles/reset.module.css */
+.container {
+  max-width: 400px;
+  margin: 100px auto;
+  background-color: #fff8f0;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.container h2 {
+  margin-bottom: 20px;
+  color: #b88b4a;
+  text-align: center;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.container input {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.container button {
+  padding: 12px;
+  background: linear-gradient(to right, #c89f71, #b88b4a);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.container p {
+  color: #d9534f;
+  text-align: center;
+  margin-top: 10px;
+}
