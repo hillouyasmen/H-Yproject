@@ -1,1 +1,2 @@
-export const API_URL = 'http://localhost:8000';
+// The base URL will be determined by the proxy in development
+export const API_BASE_URL = '';

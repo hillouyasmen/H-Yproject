@@ -1,106 +1,144 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import classes from "../styles/login.module.css";
-import { API_URL } from '../config';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../styles/Login.css';
+
+const API_URL = 'http://localhost:4000/api';
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: ''
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      if (user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/user");
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    if (token && user) {
+      try {
+        const userData = JSON.parse(user);
+        if (userData.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/profile');
+        }
+      } catch (err) {
+        // Invalid user data in localStorage, clear it
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
       }
-    }
-  }, [navigate]);
-
-  // ✅ تحقق إذا كان المستخدم موجود مسبقاً
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      if (user.role === "admin") navigate("/admin");
-      else navigate("/user");
     }
   }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setError(''); // Clear error when user starts typing
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
+    setError('');
+    setSuccess(false);
+    setIsLoading(true);
+
     try {
       if (!formData.username || !formData.password) {
-        setError("Please fill in all fields");
-        return;
+        throw new Error('Please fill in all fields');
       }
-      console.log('Sending login request to:', `${API_URL}/users/login`);
-      const res = await fetch(`${API_URL}/users/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+
+      const response = await fetch(`${API_URL}/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
 
-      const data = await res.json();
-      console.log('Login response:', data);
+      const data = await response.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed");
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
       }
 
-      localStorage.setItem("user", JSON.stringify(data));
-      setUser(data);
+      // Save token and user data
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.user);
+      setSuccess(true);
 
-      // Redirect based on role
-      if (data.role === 'admin') {
-        navigate('/admin');
+      // Show success message and redirect
+      console.log('Login successful:', data);
+      setSuccess(true);
+      
+      // Redirect based on user role
+      if (data.user.role === 'admin') {
+        setTimeout(() => navigate('/admin'), 1000);
       } else {
-        navigate('/user');
+        setTimeout(() => navigate('/profile'), 1000);
       }
     } catch (err) {
-      setError(err.message);
+      if (!navigator.onLine) {
+        setError('Please check your internet connection');
+      } else {
+        setError(err.message || 'Login failed. Please try again.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className={classes.loginContainer}>
-      <h2>Login</h2>
-      {error && <p className={classes.error}>{error}</p>}
-      <form onSubmit={handleSubmit} className={classes.form}>
-        <input
-          name="username"
-          placeholder="Username"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-        <div className={classes.links}>
-          <Link to="/reset-password" className={classes.forgotPassword}>
-            Forgot Password?
-          </Link>
-          <Link to="/signup" className={classes.signup}>
+    <div className="login-container">
+      <div className="login-box">
+        <h2 className="login-title">Login</h2>
+        {error && <div className="login-error">{error}</div>}
+        {success && <div className="login-success">Login successful! Redirecting...</div>}
+        
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="input-group">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              className="login-input"
+              required
+              disabled={isLoading}
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              className="login-input"
+              required
+              disabled={isLoading}
+            />
+          </div>
+
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+
+        <div className="login-links">
+          <Link to="/register" className="login-link">
             Don't have an account? Sign up
           </Link>
+          <Link to="/forgot-password" className="login-link">
+            Forgot password?
+          </Link>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
+

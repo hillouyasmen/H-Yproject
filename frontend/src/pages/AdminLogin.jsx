@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/AdminLogin.css";
+
+const API_URL = 'http://localhost:6003/api';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -20,25 +23,16 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/admin/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("user", JSON.stringify({ ...data.user, role: "admin" }));
-        localStorage.setItem("isLoggedIn", "true");
+      const response = await axios.post(`${API_URL}/admin/login`, formData);
+      
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
         navigate("/admin");
       } else {
-        setError(data.message || "התחברות נכשלה");
+        setError("Login failed");
       }
     } catch (err) {
-      setError("שגיאת שרת");
+      setError(err.response?.data?.message || "Server error. Please try again.");
     }
   };
 

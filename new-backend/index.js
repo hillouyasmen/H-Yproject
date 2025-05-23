@@ -1,93 +1,91 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
-const { connectDB } = require('./config/db');
+const { pool, testConnection } = require('./db');
+const userRoutes = require('./routes/users');
+const ordersRoutes = require('./routes/orders');
+const favoritesRoutes = require('./routes/favorites');
 
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Log all requests
-app.use((req, res, next) => {
-  console.log('Request Body:', req.body);
-  console.log('Request Headers:', req.headers);
-  next();
-});
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve static files from uploads directory
+app.use('/uploads', express.static('uploads'));
 
 // Routes
-app.use('/api/users', require('./routes/users'));
-app.use('/api/products', require('./routes/products'));
-app.use('/api/cart', require('./routes/cart'));
-app.use('/api/orders', require('./routes/orders'));
-
-// Health check route
-app.get('/', (req, res) => {
-  res.send('✅ API is running');
-});
+app.use('/api/users', userRoutes);
+app.use('/api/orders', ordersRoutes);
+app.use('/api/favorites', favoritesRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  res.status(500).json({ message: 'Something broke!' });
 });
 
-// Function to check if a port is available
-async function isPortAvailable(port) {
-  return new Promise((resolve) => {
-    const server = require('net').createServer()
-    server.once('error', () => resolve(false))
-    server.once('listening', () => {
-      server.close()
-      resolve(true)
-    })
-    server.listen(port, '0.0.0.0')
-  })
-}
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
+});
 
-// Function to find an available port
-async function findAvailablePort(startPort) {
-  let port = startPort
-  while (!(await isPortAvailable(port))) {
-    port++
-    if (port > startPort + 1000) { // Don't search forever
-      throw new Error('No available ports found')
+// Test route
+app.get('/', (req, res) => {
+  res.json({ message: 'Backend is running' });
+});
+
+// Start server
+const PORT = 4000;
+
+const tryPort = async (port) => {
+  return new Promise((resolve) => {
+    const server = app.listen(port)
+      .on('listening', () => {
+        server.close();
+        resolve(true);
+      })
+      .on('error', () => {
+        resolve(false);
+      });
+  });
+};
+
+const findAvailablePort = async (startPort) => {
+  let port = startPort;
+  while (!(await tryPort(port))) {
+    port++;
+    if (port > startPort + 100) {
+      throw new Error('No available ports found');
     }
   }
-  return port
-}
+  return port;
+};
 
-// Start server function
-async function startServer() {
+const startServer = async () => {
   try {
-    // First connect to database
-    await connectDB();
-    console.log('✅ Database Connected');
+    // Test database connection first
+    const dbConnected = await testConnection();
+    if (!dbConnected) {
+      console.error('Failed to connect to database. Server will not start.');
+      process.exit(1);
+    }
 
-    // Find an available port starting from the preferred port
-    const port = await findAvailablePort(process.env.PORT || 6000);
-    
-    // Start the server
-    const server = await app.listen(port, '0.0.0.0');
-    console.log(`✅ Server running on http://localhost:${port}`);
-    return server;
+    // Find available port
+    const availablePort = await findAvailablePort(4000);
+    console.log(`Found available port: ${availablePort}`);
+
+    // Start server on available port
+    app.listen(availablePort, () => {
+      console.log(`✅ Server running on http://localhost:${availablePort}`);
+    }).on('error', (err) => {
+      console.error('❌ Server failed to start:', err.message);
+      process.exit(1);
+    });
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    console.error('❌ Error starting server:', error.message);
     process.exit(1);
   }
-}
+};
 
-// Start the server
-startServer().catch(err => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+startServer();

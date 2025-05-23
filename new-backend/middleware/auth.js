@@ -2,40 +2,23 @@ const jwt = require('jsonwebtoken');
 
 const auth = (req, res, next) => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    
-    if (!token) {
-      return res.status(401).json({ message: 'No authentication token, access denied' });
+    // Get token from header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'No token, authorization denied' });
     }
 
-    const verified = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
-    req.user = verified;
+    const token = authHeader.split(' ')[1];
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
     
+    // Add user from payload
+    req.user = decoded;
     next();
-  } catch (err) {
-    res.status(401).json({ message: 'Token verification failed, authorization denied' });
+  } catch (error) {
+    res.status(401).json({ message: 'Token is not valid' });
   }
 };
 
-const adminAuth = (req, res, next) => {
-  try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    
-    if (!token) {
-      return res.status(401).json({ message: 'No authentication token, access denied' });
-    }
-
-    const verified = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
-    
-    if (verified.role !== 'admin') {
-      return res.status(403).json({ message: 'Admin access required' });
-    }
-
-    req.user = verified;
-    next();
-  } catch (err) {
-    res.status(401).json({ message: 'Token verification failed, authorization denied' });
-  }
-};
-
-module.exports = { auth, adminAuth };
+module.exports = auth;
