@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import '../styles/Checkout.css';
+
+// Initialize Stripe with public key
+const stripePromise = loadStripe('pk_test_51O5JYqJVvtjKxxx9Ky7Xt4CgEQBPBQTjXGPGXMbYWwPxjGVHNkH1vkNYqyQZ2Z8Z8Z8Z8Z8Z8Z8Z8Z8Z8');
+
+// You should replace the above key with your actual Stripe publishable key
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -38,9 +45,18 @@ const Checkout = () => {
     });
   };
 
+  const [error, setError] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setIsProcessing(true);
+    
     try {
+      const stripe = await stripePromise;
+      
+      // Create order
       const userId = localStorage.getItem('userId');
       const orderData = {
         userId,
@@ -49,6 +65,47 @@ const Checkout = () => {
         shippingDetails,
         status: 'pending'
       };
+
+      // Create order in database
+      const orderResponse = await axios.post('/api/orders', orderData);
+      const orderId = orderResponse.data.id;
+
+      // Create payment intent
+      const paymentResponse = await axios.post('/api/payments/create-payment-intent', {
+        amount: total
+      });
+
+      // Confirm payment with Stripe
+      const { error } = await stripe.confirmCardPayment(paymentResponse.data.clientSecret, {
+        payment_method: {
+          card: {
+            number: paymentDetails.cardNumber,
+            exp_month: parseInt(paymentDetails.expiryDate.split('/')[0]),
+            exp_year: parseInt(paymentDetails.expiryDate.split('/')[1]),
+            cvc: paymentDetails.cvv,
+          },
+          billing_details: {
+            name: paymentDetails.cardHolderName,
+            address: {
+              line1: shippingDetails.address,
+              city: shippingDetails.city,
+              postal_code: shippingDetails.zipCode,
+            },
+          },
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+        setIsProcessing(false);
+        return;
+      }
+
+      // Confirm payment in our backend
+      await axios.post('/api/payments/confirm', {
+        orderId,
+        paymentIntentId: paymentResponse.data.clientSecret.split('_secret')[0],
+      });
 
       // Create order
       const response = await axios.post('http://localhost:5000/api/orders', orderData);
@@ -71,6 +128,16 @@ const Checkout = () => {
 
   return (
     <div className="checkout-container">
+      {error && (
+        <div className="error-message">
+          Error: {error}
+        </div>
+      )}
+      {isProcessing && (
+        <div className="processing-message">
+          Processing your payment...
+        </div>
+      )}
       <h2>סיום הזמנה</h2>
       <div className="checkout-content">
         <div className="order-summary">

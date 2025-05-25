@@ -1,9 +1,12 @@
 const express = require('express');
+require('dotenv').config();
 const cors = require('cors');
 const { pool, testConnection } = require('./db');
 const userRoutes = require('./routes/users');
 const ordersRoutes = require('./routes/orders');
+const paymentRoutes = require('./routes/payments');
 const favoritesRoutes = require('./routes/favorites');
+const categoriesRoutes = require('./routes/categories');
 
 const app = express();
 
@@ -18,6 +21,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/users', userRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/favorites', favoritesRoutes);
+app.use('/api/categories', categoriesRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

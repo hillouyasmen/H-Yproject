@@ -8,45 +8,38 @@ const Categories = () => {
     {
       id: "dresses",
       title: "שמלות",
-      image: "/images/dress1.jpg",
-      description: "שמלות אלגנטיות לכל אירוע",
+      image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3",
+      description: "שמלות אלגנטיות ומיוחדות לכל אירוע",
       items: 24
+    },
+    {
+      id: "skirts",
+      title: "חצאיות",
+      image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?ixlib=rb-4.0.3",
+      description: "חצאיות מעוצבות במגוון סגנונות",
+      items: 20
     },
     {
       id: "tops",
       title: "חולצות",
-      image: "/images/tops2.jpg",
+      image: "https://images.unsplash.com/photo-1551048632-c72a365b176e?ixlib=rb-4.0.3",
       description: "חולצות וטופים אופנתיים",
       items: 36
     },
     {
-      id: "bottoms",
-      title: "מכנסיים וחצאיות",
-      image: "/images/bot1.jpg",
-      description: "מכנסיים, חצאיות ומכנסיים קצרים",
+      id: "pants",
+      title: "מכנסיים",
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3",
+      description: "מכנסיים אופנתיים ונוחים",
       items: 28
     },
     {
-      id: "outerwear",
-      title: "מעילים",
-      image: "/images/out1.jpg",
-      description: "מעילים, ז'קטים ובלייזרים",
-      items: 18
-    },
-    {
-      id: "formal",
-      title: "בגדים אלגנטיים",
-      image: "/images/formal1.jpg",
-      description: "בגדים אלגנטיים לאירועים מיוחדים",
-      items: 15
-    },
-    {
-      id: "beachwear",
-      title: "בגדי ים",
-      image: "/images/beachware.jpg",
-      description: "בגדי ים ובגדי חוף",
-      items: 22
-    },
+      id: "accessories",
+      title: "אקססוריז",
+      image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?ixlib=rb-4.0.3",
+      description: "תכשיטים ואביזרי אופנה משלימים",
+      items: 45
+    }
   ];
 
   return (

@@ -26,6 +26,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Favorites from "./pages/Favorites";
+import BoyShop from "./pages/BoyShop";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -68,6 +69,7 @@ function App() {
               }
             />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/boy-shop" element={<BoyShop />} />
             <Route path="/category/:id" element={<CategoryView />} />
             <Route path="/cart" element={<Cart />} />
             <Route

@@ -144,12 +144,11 @@ export default function Navbar({ user, setUser }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   const categories = [
-    { id: 1, imageUrl: '/images/body-types/rectangle.jpg', title: 'חולצות' },
-    { id: 2, imageUrl: '/images/body-types/pear.jpg', title: 'מכנסיים' },
-    { id: 3, imageUrl: '/images/body-types/hourglass.jpg', title: 'שמלות' },
-    { id: 4, imageUrl: '/images/body-types/inverted-triangle.jpg', title: 'נעליים' },
-    { id: 5, imageUrl: '/images/body-types/apple.jpg', title: 'אקססוריז' },
-    { id: 6, imageUrl: '/images/body-types/athletic.jpg', title: 'תיקים' }
+    { id: 1, imageUrl: '/images/body-types/rectangle.jpg', title: 'שמלות' },
+    { id: 2, imageUrl: '/images/body-types/pear.jpg', title: 'חצאיות' },
+    { id: 3, imageUrl: '/images/body-types/hourglass.jpg', title: 'חולצות' },
+    { id: 4, imageUrl: '/images/body-types/inverted-triangle.jpg', title: 'מכנסיים' },
+    { id: 5, imageUrl: '/images/body-types/apple.jpg', title: 'אקססוריז' }
   ];
 
   const handleSearch = (e) => {
@@ -216,6 +215,7 @@ export default function Navbar({ user, setUser }) {
           <NavLink to="/body-shapes">
             <GiDress size={18} /> מבנה גוף
           </NavLink>
+
           <NavLink to="/favorites">
             <FiHeart size={18} /> מועדפים
           </NavLink>

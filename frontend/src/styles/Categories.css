@@ -1,8 +1,9 @@
 .categories-container {
-  padding: 2rem;
-  max-width: 1200px;
+  padding: 3rem;
+  max-width: 1400px;
   margin: 0 auto;
-  direction: rtl;
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  min-height: 100vh;
 }
 
 .categories-title {
