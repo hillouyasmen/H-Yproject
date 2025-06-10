@@ -1,0 +1,114 @@
+.body-shape-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.shape-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.shape-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.shape-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.shape-svg-container {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.shape-svg-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+.shape-card h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-shape-info {
+  text-align: center;
+}
+
+.modal-shape-info h1 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.modal-shape-info p {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+}
+
+.modal-shape-svg {
+  width: 100%;
+  height: 300px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.modal-shape-svg svg {
+  width: 100%;
+  height: 100%;
+}

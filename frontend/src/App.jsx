@@ -4,7 +4,10 @@ import {
   Routes,
   Route,
   Navigate,
+  useNavigationType,
+  useLocation,
 } from "react-router-dom";
+import { startTransition } from "react";
 import { CartProvider } from "./context/CartContext";
 
 import Register from "./pages/Register";
@@ -14,6 +17,7 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ResetPassword from "./pages/ResetPassword";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import BodySetup from "./pages/BodySetup";
@@ -27,6 +31,7 @@ import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Favorites from "./pages/Favorites";
 import BoyShop from "./pages/BoyShop";
+import AdminLogin from "./pages/AdminLogin";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -38,8 +43,10 @@ function App() {
   useEffect(() => {
     // Keep user state in sync with localStorage changes (optional)
     const handleStorage = () => {
-      const savedUser = localStorage.getItem("user");
-      setUser(savedUser ? JSON.parse(savedUser) : null);
+      startTransition(() => {
+        const savedUser = localStorage.getItem("user");
+        setUser(savedUser ? JSON.parse(savedUser) : null);
+      });
     };
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
@@ -98,6 +105,7 @@ function App() {
             />
 
             {/* Auth Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/reset-password" element={<ResetPassword />} />

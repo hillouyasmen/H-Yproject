@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/AdminLogin.css";
 
-const API_URL = 'http://localhost:6003/api';
+const API_URL = 'http://localhost:4001/api';
 
 const AdminLogin = () => {
   const navigate = useNavigate();

@@ -1,3 +1,10 @@
+/**
+ * Main server file for the H&Y Project
+ * Developers:
+ * - Hazem Alsaqaan
+ * - Yasmen Hilles
+ */
+
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
@@ -22,6 +29,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/favorites', favoritesRoutes);
 app.use('/api/categories', categoriesRoutes);
+app.use('/api/products', require('./routes/products'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -40,7 +48,7 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-const PORT = 4000;
+const PORT = process.env.PORT || 4001;
 
 const tryPort = async (port) => {
   return new Promise((resolve) => {
@@ -92,4 +100,9 @@ const startServer = async () => {
   }
 };
 
-startServer();
+(async () => {
+  await startServer();
+})().catch(err => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
+});

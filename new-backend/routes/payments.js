@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+let stripe;
+try {
+  stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+} catch (error) {
+  console.warn('Stripe configuration missing - payment features will be disabled');
+}
 const { pool } = require('../db');
 const auth = require('../middleware/auth');
 

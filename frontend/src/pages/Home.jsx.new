@@ -1,0 +1,170 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
+import "../styles/Home.css";
+
+const Home = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [slideDirection, setSlideDirection] = useState('down');
+
+  const headings = {
+    h1: "/images/h1 (2).jpg",
+    h2: "/images/h2 (2).jpg",
+    h3: "/images/h3 (2).jpg",
+    h4: "/images/h4 (2).jpg",
+    h5: "/images/h5 (2).jpg"
+  };
+
+  const bodyShapes = [
+    { 
+      type: "pear", 
+      title: "Pear",
+      description: "Narrower shoulders and wider hips",
+      headingImage: headings.h3,
+      svg: (
+        <svg viewBox="0 0 100 160" className="shape-svg">
+          <path d="M50,10 C60,10 68,18 68,28 C68,38 60,46 50,46 C40,46 32,38 32,28 C32,18 40,10 50,10 M35,50 C35,50 30,90 50,100 C70,90 65,50 65,50 C65,50 75,95 50,140 C25,95 35,50 35,50" 
+            fill="currentColor"/>
+        </svg>
+      )
+    },
+    {
+      type: "hourglass",
+      title: "Hourglass",
+      description: "Balanced shoulders and hips with defined waist",
+      headingImage: headings.h3,
+      svg: (
+        <svg viewBox="0 0 100 160" className="shape-svg">
+          <path d="M30,10 C30,10 70,10 70,10 C70,10 65,50 50,60 C35,50 30,10 30,10 M30,110 C30,110 70,110 70,110 C70,110 65,70 50,60 C35,70 30,110 30,110" 
+            fill="currentColor"/>
+        </svg>
+      )
+    },
+    {
+      type: "apple",
+      title: "Apple",
+      description: "Fuller midsection with slender legs",
+      headingImage: headings.h3,
+      svg: (
+        <svg viewBox="0 0 100 160" className="shape-svg">
+          <path d="M50,10 C70,10 85,25 85,45 C85,65 70,80 50,80 C30,80 15,65 15,45 C15,25 30,10 50,10 M25,75 C25,75 50,140 50,140 C50,140 75,75 75,75" 
+            fill="currentColor"/>
+        </svg>
+      )
+    },
+    {
+      type: "rectangle",
+      title: "Rectangle",
+      description: "Straight figure with minimal curves",
+      headingImage: headings.h3,
+      svg: (
+        <svg viewBox="0 0 100 160" className="shape-svg">
+          <path d="M30,10 L70,10 L70,140 L30,140 Z" 
+            fill="currentColor"/>
+        </svg>
+      )
+    },
+    {
+      type: "inverted-triangle",
+      title: "Inverted Triangle",
+      description: "Broader shoulders tapering to narrow hips",
+      headingImage: headings.h3,
+      svg: (
+        <svg viewBox="0 0 100 160" className="shape-svg">
+          <path d="M20,10 L80,10 L60,140 L40,140 Z" 
+            fill="currentColor"/>
+        </svg>
+      )
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideDirection(prev => prev === 'down' ? 'up' : 'down');
+      setCurrentSlide((prev) => (prev + 1) % bodyShapes.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [bodyShapes.length]);
+
+  return (
+    <div className="home-container">
+      <section className="hero-section">
+        <div className="video-container">
+          <video
+            className={`hero-video ${isVideoLoaded ? 'video-loaded' : ''}`}
+            autoPlay
+            loop
+            muted
+            playsInline
+            src="/images/V1.mp4"
+            onLoadedData={() => setIsVideoLoaded(true)}
+            style={{
+              transform: `scale(${isVideoLoaded ? '1.1' : '1.05'})`,
+              filter: 'contrast(1.1) brightness(1.05) saturate(1.1)',
+              objectFit: 'cover',
+              width: '100%',
+              height: '100%',
+              borderRadius: '20px'
+            }}
+          />
+          <div className="video-overlay"></div>
+        </div>
+
+        <div className="content-container">
+          <div className="title-section">
+            <img src={headings.h1} alt="Main Title" className="main-title-image" />
+            <img src={headings.h2} alt="Subtitle" className="subtitle-image" />
+          </div>
+
+          <div className="shape-selector">
+            {bodyShapes.map((shape, index) => (
+              <AnimatePresence mode="wait" key={shape.type}>
+                {index === currentSlide && (
+                  <motion.div
+                    key={shape.type}
+                    className={`shape-item ${index === currentSlide ? 'active' : ''}`}
+                    initial={{ 
+                      opacity: 0, 
+                      y: slideDirection === 'down' ? -50 : 50 
+                    }}
+                    animate={{ 
+                      opacity: 1,
+                      y: 0,
+                      scale: 1
+                    }}
+                    exit={{ 
+                      opacity: 0,
+                      y: slideDirection === 'down' ? 50 : -50,
+                      scale: 0.8
+                    }}
+                    transition={{ 
+                      duration: 0.8, 
+                      ease: [0.43, 0.13, 0.23, 0.96]
+                    }}
+                  >
+                    <div className="shape-image-container">
+                      {shape.svg}
+                    </div>
+                    <div className="shape-content stealthy-move">
+                      <div className="shape-heading">
+                        <img src={shape.headingImage} alt={shape.title} className="shape-heading-image" />
+                      </div>
+                      <div className="shape-type">
+                        <img src={headings.h4} alt="Body Type" className="type-heading-image" />
+                      </div>
+                      <div className="shape-description">
+                        <img src={headings.h5} alt={shape.description} className="description-heading-image" />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;

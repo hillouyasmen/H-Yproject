@@ -1,13 +1,20 @@
 /* Global styles */
 :root {
-  --primary-color: #4CAF50;
-  --secondary-color: #2196F3;
-  --error-color: #ff4444;
-  --success-color: #45a049;
-  --text-color: #333;
-  --background-color: #f5f5f5;
-  --border-radius: 8px;
-  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Luxurious and feminine color scheme */
+  --primary-color: #FFB6C1; /* Blush pink */
+  --secondary-color: #F5F5F5; /* Ivory */
+  --accent-color: #FF69B4; /* Hot pink */
+  --background-color: #FFF5F5; /* Soft pink */
+  --text-color: #4A4A4A;
+  --success-color: #90EE90;
+  --error-color: #FFB6C1;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(255, 182, 193, 0.1);
+  --card-background: #FFF5F5;
+  --card-shadow: 0 4px 12px rgba(255, 182, 193, 0.05);
+  --hover-shadow: 0 6px 16px rgba(255, 182, 193, 0.1);
+  --gold-color: #FFD700;
+  --gold-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
 }
 
 * {
@@ -21,6 +28,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   direction: rtl;
+  transition: background-color 0.3s ease;
 }
 
 .container {

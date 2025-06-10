@@ -3,14 +3,22 @@ import axios from 'axios';
 
 const CartContext = createContext();
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
+};
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [orderHistory, setOrderHistory] = useState([]);
 
   useEffect(() => {
     fetchCart();
+    fetchOrderHistory();
   }, []);
 
   const fetchCart = async () => {
@@ -24,6 +32,18 @@ export const CartProvider = ({ children }) => {
       console.error('Error fetching cart:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchOrderHistory = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        const response = await axios.get(`http://localhost:5000/api/orders/${userId}`);
+        setOrderHistory(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching order history:', error);
     }
   };
 
@@ -42,6 +62,41 @@ export const CartProvider = ({ children }) => {
       fetchCart(); // Refresh cart after adding item
     } catch (error) {
       console.error('Error adding to cart:', error);
+      throw error;
+    }
+  };
+
+  const createOrder = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        throw new Error('User not logged in');
+      }
+
+      if (cartItems.length === 0) {
+        throw new Error('Cart is empty');
+      }
+
+      const orderData = {
+        items: cartItems,
+        total: cartItems.reduce((sum, item) => 
+          sum + (item.productId.price * (1 - item.productId.discount / 100) * item.quantity), 0
+        ),
+        userId
+      };
+
+      await axios.post('http://localhost:5000/api/orders', orderData);
+      
+      // Clear cart after order creation
+      await axios.delete(`http://localhost:5000/api/cart/${userId}`);
+      setCartItems([]);
+      
+      // Refresh order history
+      fetchOrderHistory();
+      
+      return true;
+    } catch (error) {
+      console.error('Error creating order:', error);
       throw error;
     }
   };
@@ -111,3 +166,5 @@ export const CartProvider = ({ children }) => {
 };
 
 export default CartContext;
+
+CartContext.displayName = 'CartContext';

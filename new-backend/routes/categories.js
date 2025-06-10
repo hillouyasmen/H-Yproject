@@ -5,8 +5,17 @@ const { pool } = require('../db');
 // Get all categories
 router.get('/', async (req, res) => {
     try {
-        const [categories] = await pool.query('SELECT * FROM categories');
-        res.json(categories);
+        const [categories] = await pool.query(
+            'SELECT category_id, name, description, image_url FROM categories'
+        );
+        
+        // Add default image URL if not provided
+        const categoriesWithImages = categories.map(category => ({
+            ...category,
+            image_url: category.image_url || 'https://via.placeholder.com/300'
+        }));
+        
+        res.json(categoriesWithImages);
     } catch (error) {
         console.error('Error fetching categories:', error);
         res.status(500).json({ message: 'Error fetching categories' });

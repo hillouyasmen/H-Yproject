@@ -83,9 +83,9 @@ const CategoryDropdown = styled.div`
   margin-top: 0.5rem;
   z-index: 1000;
   min-width: 600px;
-  opacity: ${props => props.isOpen ? 1 : 0};
-  visibility: ${props => props.isOpen ? 'visible' : 'hidden'};
-  transform: translateY(${props => props.isOpen ? '0' : '-10px'});
+  opacity: ${props => props['data-isopen'] ? 1 : 0};
+  visibility: ${props => props['data-isopen'] ? 'visible' : 'hidden'};
+  transform: translateY(${props => props['data-isopen'] ? '0' : '-10px'});
   transition: all 0.3s ease;
 `;
 
@@ -144,7 +144,7 @@ export default function Navbar({ user, setUser }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   const categories = [
-    { id: 1, imageUrl: '/images/body-types/rectangle.jpg', title: 'שמלות' },
+    { id: 1, imageUrl: '/images/body-types/c1 (2).jpg', title: 'שמלות' },
     { id: 2, imageUrl: '/images/body-types/pear.jpg', title: 'חצאיות' },
     { id: 3, imageUrl: '/images/body-types/hourglass.jpg', title: 'חולצות' },
     { id: 4, imageUrl: '/images/body-types/inverted-triangle.jpg', title: 'מכנסיים' },
@@ -209,7 +209,7 @@ export default function Navbar({ user, setUser }) {
             קטגוריות
             <FiChevronDown style={{ transform: isCategoryOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s ease' }} />
           </NavLink>
-          <CategoryDropdown isOpen={isCategoryOpen} className="category-dropdown">
+          <CategoryDropdown data-isopen={isCategoryOpen} className="category-dropdown">
             <CategoryGrid categories={categories} />
           </CategoryDropdown>
           <NavLink to="/body-shapes">

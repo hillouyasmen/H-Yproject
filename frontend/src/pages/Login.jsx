@@ -133,7 +133,7 @@ export default function Login({ setUser }) {
           <Link to="/register" className="login-link">
             Don't have an account? Sign up
           </Link>
-          <Link to="/forgot-password" className="login-link">
+          <Link to="/reset-password" className="login-link">
             Forgot password?
           </Link>
         </div>

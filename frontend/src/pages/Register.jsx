@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import '../styles/Register.css';
 
-const API_URL = 'http://localhost:4002/api';
+const API_URL = 'http://localhost:4000/api';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -46,11 +46,7 @@ const Register = () => {
         return;
       }
 
-      // Validate password length
-      if (formData.password.length < 6) {
-        setError('Password must be at least 6 characters long');
-        return;
-      }
+
 
       // Format the data
       const formattedData = {

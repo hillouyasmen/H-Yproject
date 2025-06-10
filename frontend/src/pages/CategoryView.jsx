@@ -13,14 +13,15 @@ const CategoryView = () => {
   useEffect(() => {
     const fetchCategoryAndProducts = async () => {
       try {
-        // Fetch category details
-        const categoryRes = await fetch(`http://localhost:5000/api/categories/${id}`);
-        if (!categoryRes.ok) throw new Error('Category not found');
-        const categoryData = await categoryRes.json();
-        setCategory(categoryData);
+        // Fetch all categories
+        const categoriesRes = await fetch('http://localhost:4001/api/categories');
+        const categories = await categoriesRes.json();
+        const category = categories.find(c => c.category_id === parseInt(id));
+        if (!category) throw new Error('Category not found');
+        setCategory(category);
 
         // Fetch products for this category
-        const productsRes = await fetch(`http://localhost:5000/api/products?category=${id}`);
+        const productsRes = await fetch(`http://localhost:4001/api/products/category/${id}`);
         if (!productsRes.ok) throw new Error('Failed to fetch products');
         const productsData = await productsRes.json();
         setProducts(productsData);
