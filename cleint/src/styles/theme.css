@@ -1,0 +1,31 @@
+:root{
+  --pink:#f9d7e6;
+  --pink-strong:#d63384;
+  --bg:#fff7fb;
+  --text:#2e2e2e;
+  --muted:#777;
+  --card:#ffffff;
+  --shadow:0 8px 20px rgba(0,0,0,.08);
+  --radius:18px;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.grid{display:grid;gap:20px}
+.btn{
+  background:var(--pink-strong);color:#fff;border:none;padding:10px 18px;
+  border-radius:999px;cursor:pointer;box-shadow:var(--shadow);transition:.2s;
+}
+.btn:hover{transform:translateY(-1px);opacity:.95}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.input, .select, .textarea{
+  width:100%;padding:12px 14px;border:1px solid #eee;border-radius:12px;background:#fff;outline:none;
+}
+.input:focus, .select:focus, .textarea:focus{border-color:var(--pink-strong);box-shadow:0 0 0 3px rgba(214,51,132,.12)}
+.sectionTitle{font-size:1.6rem;color:var(--pink-strong);margin:10px 0 16px}
+.link{color:var(--pink-strong);text-decoration:none}
+.link:hover{text-decoration:underline}
+.badge{display:inline-block;background:var(--pink);color:#7a1e4c;padding:4px 10px;border-radius:999px;font-size:.8rem}

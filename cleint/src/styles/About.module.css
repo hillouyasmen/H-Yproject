@@ -1,0 +1,177 @@
+/* ===== About.module.css — Charcoal × Blush Classic ===== */
+
+:root {
+  --ink: #2b2330;
+  --muted: #6f6a72;
+  --blush: var(--pink-strong, #d63384);
+  --gold: #c9a96a;
+  --card-bg: #ffffff;
+  --shadow: 0 28px 60px rgba(0, 0, 0, 0.14);
+  --shadow-soft: 0 14px 34px rgba(214, 51, 132, 0.15);
+}
+
+/* Canvas */
+.about {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: clamp(2.8rem, 6vw, 5rem) 1rem;
+  overflow: hidden;
+  background: radial-gradient(
+      900px 600px at 10% 0%,
+      rgba(255, 200, 221, 0.28),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px 520px at 100% 0%,
+      rgba(246, 200, 165, 0.22),
+      transparent 60%
+    ),
+    linear-gradient(135deg, #fff7fb 0%, #ffffff 60%);
+}
+.about::before {
+  /* هالة هادئة (Aurora) */
+  content: "";
+  position: absolute;
+  inset: -25% -20% auto -20%;
+  height: 170%;
+  background: conic-gradient(
+      from 200deg at 30% 50%,
+      rgba(255, 143, 193, 0.28),
+      transparent 30%,
+      rgba(246, 200, 165, 0.28) 60%,
+      transparent 80%
+    ),
+    radial-gradient(closest-side, rgba(255, 255, 255, 0.35), transparent 70%);
+  filter: blur(70px) saturate(110%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card */
+.card {
+  position: relative;
+  max-width: 980px;
+  width: 100%;
+  border-radius: 22px;
+  padding: clamp(1.5rem, 3.6vw, 2.8rem);
+  background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.42), rgba(201, 169, 106, 0.55))
+      border-box;
+  border: 1.5px solid transparent;
+  box-shadow: var(--shadow);
+  text-align: center;
+  z-index: 1;
+}
+
+/* Title */
+.title {
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  font-weight: 900;
+  margin: 0 0 0.8rem;
+  letter-spacing: 0.2px;
+  background: linear-gradient(90deg, var(--blush), var(--gold) 140%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 #fff8;
+}
+
+/* Description */
+.description {
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  color: var(--muted);
+  margin: 0 0 2rem;
+  line-height: 1.55;
+}
+
+/* Founders grid */
+.founders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+  justify-content: center;
+  margin-bottom: clamp(1.6rem, 4vw, 2.2rem);
+}
+
+/* Founder card */
+.founder {
+  position: relative;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.35), rgba(201, 169, 106, 0.45))
+      border-box;
+  border: 1.5px solid transparent;
+  border-radius: 18px;
+  padding: 1.4rem 1.2rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease, background 0.25s ease;
+}
+.founder:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px rgba(214, 51, 132, 0.18);
+}
+
+/* Avatar */
+.founder img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 0.9rem;
+  background: #fff;
+  border: 3px solid transparent;
+  /* حلقة متدرّجة */
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, var(--blush), var(--gold)) border-box;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+}
+
+/* Founder text */
+.founder h3 {
+  font-size: 1.08rem;
+  color: var(--ink);
+  font-weight: 900;
+  margin: 0 0 0.35rem;
+  letter-spacing: 0.2px;
+}
+.founder p {
+  font-size: 0.96rem;
+  color: #4b4650;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Closing */
+.closing {
+  font-size: clamp(1rem, 1.2vw, 1.08rem);
+  color: #35303a;
+  margin-top: clamp(1.4rem, 3.2vw, 2rem);
+  line-height: 1.6;
+}
+.closing span {
+  font-weight: 800;
+  color: var(--ink);
+  background: linear-gradient(
+    180deg,
+    rgba(214, 51, 132, 0.18),
+    rgba(201, 169, 106, 0.18)
+  );
+  padding: 0 0.3rem;
+  border-radius: 6px;
+  box-decoration-break: clone; /* يدعم تعدد الأسطر */
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .card {
+    padding: 1.6rem;
+  }
+  .founder {
+    padding: 1.1rem;
+  }
+  .founder img {
+    width: 86px;
+    height: 86px;
+  }
+}
