@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // backend/db.js (ESM)
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
@@ -13,3 +14,31 @@ export const pool = mysql.createPool({
   queueLimit: 0,
   timezone: "Z",
 });
+=======
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+// Simple database configuration
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'hy_store',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+// Test connection
+(async () => {
+  try {
+    const conn = await pool.getConnection();
+    console.log('✅ Database connected');
+    conn.release();
+  } catch (err) {
+    console.error('❌ Database connection failed:', err);
+  }
+})();
+
+module.exports = pool;
+>>>>>>> 96d5d4fa470c5e3711e74096bc067efa4f6df75d
