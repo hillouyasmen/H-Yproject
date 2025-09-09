@@ -1,0 +1,142 @@
+:root {
+  --ink: #231a25;
+  --muted: #7b7280;
+  --rose: #d63384;
+  --rose-20: #ffe2f0;
+  --rose-10: #fff0f7;
+  --grad: linear-gradient(135deg, #ff6fae, #f6c8a5);
+  --ring: 1px solid rgba(214, 51, 132, 0.16);
+  --sh-sm: 0 10px 22px rgba(214, 51, 132, 0.14);
+  --sh-md: 0 16px 36px rgba(214, 51, 132, 0.18);
+  --r: 14px;
+}
+
+.page {
+  display: grid;
+  gap: 12px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 16px;
+  border: var(--ring);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.86)
+  );
+  box-shadow: var(--sh-md);
+}
+.title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ink);
+}
+.hint {
+  color: var(--muted);
+  font-weight: 700;
+}
+.cardBtn {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 900;
+  color: #fff;
+  background: var(--grad);
+  box-shadow: var(--sh-sm);
+  cursor: pointer;
+}
+.cardBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(214, 51, 132, 0.2);
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+.card {
+  padding: 14px;
+  border-radius: 16px;
+  border: var(--ring);
+  background: #fff;
+  box-shadow: var(--sh-md);
+  display: grid;
+  gap: 10px;
+}
+.cardTitle {
+  font-weight: 900;
+  color: var(--ink);
+}
+.row {
+  display: grid;
+  gap: 6px;
+}
+.twoCols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+input,
+select {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(214, 51, 132, 0.18);
+  padding: 0 12px;
+  font-weight: 700;
+  color: var(--ink);
+  background: #fff;
+  outline: 0;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+input:focus,
+select:focus {
+  border-color: #d63384;
+  box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.14);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+.primary {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-weight: 900;
+  color: #fff;
+  background: var(--grad);
+  box-shadow: var(--sh-sm);
+  cursor: pointer;
+}
+.ghost {
+  border: 1px dashed rgba(214, 51, 132, 0.25);
+  background: #fff;
+  color: #d63384;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.tiny {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

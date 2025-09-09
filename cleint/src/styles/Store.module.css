@@ -1,0 +1,100 @@
+.wrap {
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --pink: #d63384;
+
+  padding: 16px 0 40px;
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 8px 0 14px;
+}
+
+.title {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+.sub {
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+}
+
+.search {
+  width: min(46vw, 420px);
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  padding: 0 12px;
+  outline: none;
+  background: #fff;
+}
+.search:focus {
+  border-color: #f4b6d4;
+  box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.08);
+}
+
+.sort {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  background: #fff;
+  padding: 0 10px;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* Skeleton */
+.skelGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.skelCard {
+  border-radius: 18px;
+  border: 1px solid #f3e1ea;
+  background: #fff;
+  padding: 10px;
+}
+.skelThumb {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #f6f6f6 20%, #efefef 40%, #f6f6f6 60%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+.skelLine {
+  height: 10px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f6f6f6 20%, #efefef 40%, #f6f6f6 60%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.empty {
+  grid-column: 1/-1;
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 0;
+}

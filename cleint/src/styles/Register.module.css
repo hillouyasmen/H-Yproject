@@ -1,0 +1,188 @@
+/* ===== Register.module.css — Charcoal × Blush Classic ===== */
+:root {
+  --ink: #2b2330;
+  --muted: #6f6a72;
+  --blush: #d63384;
+  --pink: #ff7ab8;
+  --gold: #c9a96a;
+  --card-bg: #fff;
+  --radius: 20px;
+  --shadow: 0 28px 60px rgba(0, 0, 0, 0.14);
+  --shadow-soft: 0 14px 34px rgba(214, 51, 132, 0.15);
+}
+
+.page {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: clamp(32px, 6vw, 64px) 16px;
+  background: radial-gradient(
+      900px 600px at 10% 0%,
+      rgba(255, 200, 221, 0.28),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px 520px at 100% 0%,
+      rgba(246, 200, 165, 0.22),
+      transparent 60%
+    ),
+    linear-gradient(135deg, #fff7fb 0%, #ffffff 60%);
+  overflow: hidden;
+}
+.fxAurora {
+  position: absolute;
+  inset: -25% -20% auto -20%;
+  height: 170%;
+  background: conic-gradient(
+      from 200deg at 30% 50%,
+      rgba(255, 143, 193, 0.28),
+      transparent 30%,
+      rgba(246, 200, 165, 0.28) 60%,
+      transparent 80%
+    ),
+    radial-gradient(closest-side, rgba(255, 255, 255, 0.35), transparent 70%);
+  filter: blur(70px) saturate(110%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  padding: clamp(18px, 4.5vw, 28px);
+  border-radius: 22px;
+  background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.42), rgba(201, 169, 106, 0.55))
+      border-box;
+  border: 1.5px solid transparent;
+  box-shadow: var(--shadow);
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 3.6vw, 2rem);
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  background: linear-gradient(90deg, var(--blush), var(--gold) 140%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 #fff8;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+.label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--muted);
+  margin: 2px 2px 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.5px solid #f0cddd;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease,
+    transform 0.08s ease;
+}
+.input::placeholder {
+  color: #a8a4ac;
+  font-weight: 600;
+}
+.input:focus {
+  border-color: #ebb8d3;
+  box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.1),
+    0 14px 34px rgba(214, 51, 132, 0.14);
+  transform: translateY(-1px);
+}
+
+.pwWrap {
+  position: relative;
+}
+.togglePw {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: #fff;
+  color: #6b5d71;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #f0cddd;
+  transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+}
+.togglePw:hover {
+  background: #fff7fb;
+  transform: translateY(calc(-50% - 1px));
+  box-shadow: 0 6px 16px rgba(214, 51, 132, 0.12);
+}
+
+.err {
+  color: #b00042;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.primaryBtn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(90deg, var(--pink), var(--blush));
+  box-shadow: 0 14px 34px rgba(214, 51, 132, 0.22);
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.18s ease,
+    opacity 0.18s ease;
+}
+.primaryBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+  box-shadow: 0 18px 40px rgba(214, 51, 132, 0.26);
+}
+.primaryBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.links {
+  margin-top: 10px;
+  text-align: center;
+}
+.link {
+  text-decoration: none;
+  font-weight: 900;
+  color: #5a4c5f;
+  transition: color 0.15s ease, transform 0.12s ease;
+}
+.link:hover {
+  color: var(--blush);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+}

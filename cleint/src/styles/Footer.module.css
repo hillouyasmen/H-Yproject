@@ -1,0 +1,138 @@
+:root {
+  /* فحم + ذهب (مع بدائل افتراضية لو ناقصين عندك) */
+  --charcoal-900: var(--charcoal-900, #0f1012);
+  --charcoal-850: var(--charcoal-850, #14161a);
+  --charcoal-800: var(--charcoal-800, #191b20);
+  --charcoal-700: var(--charcoal-700, #1f2228);
+  --stone-200: var(--stone-200, #dcdde1);
+  --stone-300: var(--stone-300, #c9cacf);
+  --gold: var(--gold, #c9a96a);
+
+  --ink: var(--ink, #f2f3f5);
+  --muted: var(--muted, #a7aab0);
+  --radius: 20px;
+  --shadow-up: 0 -10px 28px rgba(0, 0, 0, 0.22);
+}
+
+/* Shell */
+.footer {
+  position: relative;
+  margin-top: 3rem;
+  background: linear-gradient(180deg, var(--charcoal-850), var(--charcoal-900));
+  color: var(--ink);
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  box-shadow: var(--shadow-up);
+  overflow: hidden;
+  isolation: isolate;
+  padding: 2.2rem 1.5rem;
+}
+
+/* خط علوي ذهبي رفيع */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(201, 169, 106, 0),
+    rgba(201, 169, 106, 0.7),
+    rgba(201, 169, 106, 0)
+  );
+  opacity: 0.9;
+}
+
+/* محتوى داخلي */
+.footerInner {
+  display: grid;
+  gap: 2rem;
+}
+
+/* العمود الأيسر (البراند) */
+.brandName {
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.4px;
+  background: linear-gradient(90deg, var(--gold), #e2cf9e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.copy {
+  font-size: 0.86rem;
+  margin-top: 0.5rem;
+  color: var(--muted);
+}
+
+/* الأعمدة */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.6rem;
+}
+
+/* عنوان عمود (بادج ذهبية هادئة) */
+.badge {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #111;
+  background: linear-gradient(135deg, var(--gold), #e2cf9e 140%);
+  padding: 0.36rem 0.8rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+  margin-bottom: 0.7rem;
+}
+
+/* روابط */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.item {
+  margin: 0.42rem 0;
+}
+.link {
+  color: var(--stone-300);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease, transform 0.2s ease,
+    text-decoration-color 0.2s ease;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+}
+.link:hover {
+  color: var(--ink);
+  transform: translateX(4px);
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 169, 106, 0.75);
+}
+
+/* صف أيقونات بسيط (اختياري) */
+.social {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+.icon {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  color: var(--stone-300);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.icon:hover {
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .footerInner {
+    grid-template-columns: 1.2fr 2fr;
+    align-items: start;
+  }
+}

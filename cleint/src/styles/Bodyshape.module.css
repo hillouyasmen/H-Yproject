@@ -1,0 +1,534 @@
+:root {
+  --pink: #ff7ab8;
+  --pink-strong: #d63384;
+  --pink-soft: #ffe9f3;
+  --ink: #2e2e2e;
+  --muted: #7a7a7a;
+  --gold: #f6c8a5;
+  --violet: #9253e8;
+  --radius: 22px;
+  --shadow: 0 24px 50px rgba(214, 51, 132, 0.22);
+  --shadow-soft: 0 12px 28px rgba(214, 51, 132, 0.18);
+}
+
+/* Page + cinematic FX */
+.page {
+  position: relative;
+  padding: 20px;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.page::before,
+.page::after {
+  content: "";
+  position: absolute;
+  inset: -20% -20% auto -20%;
+  height: 140%;
+  pointer-events: none;
+  filter: blur(70px) saturate(120%);
+  z-index: -2;
+}
+.page::before {
+  background: conic-gradient(
+      from 200deg at 20% 40%,
+      rgba(255, 122, 184, 0.35),
+      transparent 30%,
+      rgba(146, 83, 232, 0.25),
+      transparent 70%
+    ),
+    radial-gradient(closest-side, rgba(255, 255, 255, 0.22), transparent 60%);
+  animation: aurora 16s ease-in-out infinite alternate;
+}
+.page::after {
+  inset: -10% -10% auto auto;
+  background: conic-gradient(
+    from 30deg at 80% 40%,
+    rgba(246, 200, 165, 0.35),
+    transparent 40%,
+    rgba(255, 200, 221, 0.25),
+    transparent 70%
+  );
+  animation: aurora 18s ease-in-out infinite alternate-reverse;
+}
+
+/* floating stars / petals */
+.fxStars,
+.fxBokeh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.fxStars {
+  background-image: radial-gradient(2px 2px at 20% 30%, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 70% 20%, #fff, transparent 60%),
+    radial-gradient(2px 2px at 40% 80%, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 85% 65%, #fff, transparent 60%);
+  opacity: 0.6;
+  animation: drift 30s linear infinite;
+}
+.fxBokeh {
+  background-image: radial-gradient(
+      120px 80px at 10% 70%,
+      rgba(255, 143, 193, 0.18),
+      transparent 70%
+    ),
+    radial-gradient(
+      100px 60px at 90% 30%,
+      rgba(146, 83, 232, 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      90px 60px at 40% 10%,
+      rgba(246, 200, 165, 0.18),
+      transparent 70%
+    );
+  animation: float 12s ease-in-out infinite;
+}
+
+/* Typography */
+.title {
+  font-size: clamp(2rem, 2.6vw, 2.6rem);
+  font-weight: 900;
+  text-align: center;
+  margin: 6px 0 4px;
+  background: linear-gradient(90deg, #2e2e2e 0%, #7a4a6a 60%, #d63384 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+/* Shapes grid */
+.grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* Luxe border helper */
+.luxBorder {
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.55), rgba(246, 200, 165, 0.7))
+      border-box;
+  border: 2px solid transparent;
+}
+
+/* Shape card — 3D tilt + shine */
+.shapeCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 16px;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease;
+  will-change: transform, box-shadow;
+  transform: perspective(900px) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
+}
+.shapeCard:hover {
+  transform: perspective(900px) rotateX(var(--rx, -2deg))
+    rotateY(var(--ry, 2deg)) translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow);
+}
+.shapeCard::after {
+  /* border glow */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    60% 80% at 50% 0%,
+    rgba(255, 143, 193, 0.25),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.shapeCard:hover::after {
+  opacity: 1;
+}
+
+.shapeImage {
+  height: 200px;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 12px;
+  transition: transform 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.shapeCard:hover .shapeImage {
+  transform: scale(1.05);
+}
+.shapeImage::after {
+  /* silky shine */
+  content: "";
+  position: absolute;
+  inset: -100% -40% auto -40%;
+  height: 220%;
+  transform: rotate(20deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transition: transform 0.8s ease;
+}
+.shapeCard:hover .shapeImage::after {
+  transform: translateX(180%) rotate(20deg);
+}
+
+.shapeName {
+  font-weight: 900;
+  margin-top: 6px;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+.shapeHint {
+  color: var(--pink-strong);
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+/* Modal cinematic overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+      40% 30% at 50% 0%,
+      rgba(255, 143, 193, 0.18),
+      transparent
+    ),
+    rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 30px;
+  z-index: 1000;
+}
+.modal {
+  width: min(1100px, 96vw);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+  animation: pop 0.2s ease both;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(#ffffffd9, #ffffffd9) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.55), rgba(246, 200, 165, 0.7))
+      border-box;
+  border: 2px solid transparent;
+}
+@keyframes pop {
+  from {
+    transform: scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close {
+  position: absolute;
+  right: 32px;
+  top: 24px;
+  background: #fff;
+  border: 1px solid #f2c6dc;
+  border-radius: 999px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: 900;
+  color: var(--pink-strong);
+  box-shadow: 0 10px 22px rgba(214, 51, 132, 0.18);
+}
+
+/* Hero inside modal */
+.hero {
+  position: relative;
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 122, 184, 0.25),
+    rgba(0, 0, 0, 0.45)
+  );
+}
+.heroContent {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: end start;
+  padding: 18px;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+.heroTitle {
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+  font-weight: 900;
+}
+.heroDesc {
+  opacity: 0.95;
+  font-weight: 700;
+}
+
+/* Products */
+.productsGrid {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  max-height: min(62vh, 720px);
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+.productsGrid::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.productsGrid::-webkit-scrollbar-thumb {
+  background: #f5d2e4;
+  border-radius: 20px;
+}
+.productsGrid::-webkit-scrollbar-track {
+  background: #fffafb;
+  border-radius: 20px;
+}
+
+.pCard {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid #f5d2e4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.thumb {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(214, 51, 132, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+.pCard:hover .thumb {
+  transform: scale(1.03);
+  filter: saturate(1.05);
+}
+
+.pName {
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.row label {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.select {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid #f0cddd;
+  background: #fff;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.price {
+  font-weight: 900;
+  color: var(--pink-strong);
+}
+
+/* Buttons — magic sparkle + gradient */
+.primaryBtn {
+  position: relative;
+  background: linear-gradient(135deg, #ff84bd, #ff6fae 45%, var(--gold) 120%);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  box-shadow: 0 12px 28px rgba(214, 51, 132, 0.22);
+  overflow: hidden;
+}
+.primaryBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+}
+.primaryBtn::after {
+  content: "";
+  position: absolute;
+  inset: -120% -40% auto -40%;
+  height: 220%;
+  transform: rotate(20deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transition: transform 0.7s ease;
+}
+.primaryBtn:hover::after {
+  transform: translateX(180%) rotate(20deg);
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid #f6d6e6;
+  background: #fffafb;
+}
+.ghostBtn {
+  background: #fff;
+  border: 2px solid transparent;
+  color: var(--pink-strong);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.45), rgba(246, 200, 165, 0.55))
+      border-box;
+}
+.ghostBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.checkoutBtn {
+  background: linear-gradient(90deg, #ff7ab8, #d63384, #9253e8);
+  background-size: 200% 100%;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.18s ease, filter 0.18s ease,
+    background-position 0.8s ease;
+}
+.checkoutBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+  background-position: 100% 0;
+}
+
+.empty {
+  grid-column: 1/-1;
+  text-align: center;
+  color: var(--muted);
+  padding: 16px;
+}
+
+/* Accessibility & Responsive */
+.close:focus-visible,
+.primaryBtn:focus-visible,
+.ghostBtn:focus-visible,
+.checkoutBtn:focus-visible,
+.shapeCard:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.35);
+}
+
+@media (max-width: 740px) {
+  .hero {
+    height: 170px;
+  }
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+/* Motion */
+@keyframes aurora {
+  0% {
+    transform: translateX(-6%) translateY(-3%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(6%) translateY(3%) rotate(3deg);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes drift {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page::before,
+  .page::after,
+  .fxStars,
+  .fxBokeh {
+    animation: none !important;
+  }
+  .shapeCard,
+  .shapeImage,
+  .thumb,
+  .primaryBtn {
+    transition: none !important;
+  }
+}

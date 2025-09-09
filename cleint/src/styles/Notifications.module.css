@@ -1,0 +1,188 @@
+/* ==== Toasts: N🔥R Ember/Gold (CSS Modules) ==== */
+.wrap {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+  pointer-events: none; /* ما يمنع ضغط الصفحة */
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 260px;
+  max-width: 420px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 700;
+  position: relative;
+  overflow: hidden;
+
+  /* لوح داكن + إطار متدرّج (ناري) */
+  background: linear-gradient(
+        180deg,
+        rgba(16, 17, 20, 0.92),
+        rgba(12, 13, 15, 0.92)
+      )
+      padding-box,
+    linear-gradient(135deg, var(--t1), var(--t2)) border-box;
+  border: 1.5px solid transparent;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  animation: toast-pop 0.18s ease;
+}
+
+/* وهج خلفي لطيف بنفس لون الـaccent */
+.toast::before {
+  content: "";
+  position: absolute;
+  inset: -30% -10% auto -10%;
+  height: 180%;
+  background: radial-gradient(
+      60% 50% at 15% 30%,
+      color-mix(in oklab, var(--t2), transparent 40%),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 40% at 90% 90%,
+      color-mix(in oklab, var(--t1), transparent 55%),
+      transparent 70%
+    );
+  filter: blur(26px) saturate(120%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* شريط تقدّم للغلق التلقائي */
+.auto::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--t1), var(--t2));
+  transform-origin: left;
+  animation: toast-life var(--life, 3000ms) linear forwards;
+  box-shadow: 0 0 12px color-mix(in oklab, var(--t2), transparent 40%);
+}
+
+.icon {
+  color: var(--t2);
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 0.78rem;
+  font-weight: 900;
+  opacity: 0.85;
+  margin-bottom: 2px;
+}
+
+.msg {
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.close {
+  background: rgba(255, 255, 255, 0.14);
+  border: none;
+  color: #fff;
+  font-weight: 900;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+}
+.close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* حالات – فليكِر خفيف للناري */
+.error {
+  animation: toast-flicker 2.1s ease-in-out infinite both;
+}
+.warn {
+  animation: toast-flicker 2.6s ease-in-out infinite both;
+}
+/* success/info بدون فليكِر افتراضيًا */
+.success {
+}
+.info {
+}
+
+/* Animations */
+@keyframes toast-pop {
+  from {
+    transform: translateY(-6px) scale(0.98);
+    opacity: 0.85;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes toast-life {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+@keyframes toast-flicker {
+  0% {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+  45% {
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+  60% {
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28),
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  }
+  100% {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .wrap {
+    top: 12px;
+    right: 50%;
+    transform: translateX(50%);
+    width: min(92vw, 420px);
+  }
+  .toast {
+    max-width: 100%;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .toast,
+  .toast::before,
+  .auto::after,
+  .close {
+    animation: none !important;
+    transition: none !important;
+  }
+}

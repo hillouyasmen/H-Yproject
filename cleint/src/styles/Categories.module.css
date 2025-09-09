@@ -1,0 +1,399 @@
+/* ===== H&Y Moda — Categories (Luxury) ===== */
+.wrap {
+  --ink: #251c26;
+  --muted: #7a7a7a;
+  --pink-10: #fff0f7;
+  --pink-20: #ffe2f0;
+  --pink-40: #ffc8de;
+  --pink-70: #ff8fc1;
+  --pink-90: #d63384;
+  --gold: #f6c8a5;
+  --ring: 1px solid rgba(214, 51, 132, 0.14);
+  --radius: 20px;
+  --shadow: 0 22px 48px rgba(255, 143, 193, 0.22);
+  position: relative;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.88),
+    rgba(255, 255, 255, 0.75)
+  );
+  padding: 12px 8px;
+  border-bottom: var(--ring);
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.select {
+  border-radius: 14px;
+  border: 1px solid rgba(214, 51, 132, 0.22);
+  background: #fff;
+  padding: 8px 10px;
+  outline: none;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.select:focus {
+  border-color: var(--pink-90);
+  box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.14);
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.skelTile {
+  height: 180px;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, #f7f0f3 25%, #fbf6f8 50%, #f7f0f3 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border: var(--ring);
+}
+
+.tile {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: block;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(
+        135deg,
+        rgba(255, 111, 174, 0.55),
+        rgba(246, 200, 165, 0.55)
+      )
+      border-box;
+  border: 1.5px solid transparent;
+  box-shadow: var(--shadow);
+  height: 180px;
+  transition: transform 0.18s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.tile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 60px rgba(255, 143, 193, 0.26);
+  filter: saturate(1.03) contrast(1.02);
+}
+
+.tileImg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05);
+}
+
+.tileGrad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0.12) 60%,
+    rgba(0, 0, 0, 0.22) 100%
+  );
+}
+
+.tileName {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.arrow {
+  margin-inline-start: 8px;
+  opacity: 0.9;
+}
+
+/* Shape pills on tile */
+.pills {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-width: 85%;
+}
+.pill {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #9c2b63;
+  background: linear-gradient(180deg, #fff, #fff8fb);
+  border: 1px solid rgba(214, 51, 132, 0.28);
+  text-decoration: none;
+}
+.pill:hover {
+  filter: brightness(1.02);
+}
+.more {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px dashed rgba(214, 51, 132, 0.28);
+  color: var(--muted);
+}
+
+/* زر تعديل فوق الصورة */
+.quickEdit {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 0;
+  border-radius: 10px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+.quickEdit:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Empty */
+.empty {
+  grid-column: 1/-1;
+  text-align: center;
+  color: var(--muted);
+  background: #fff;
+  border: var(--ring);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+/* Admin card */
+.mgmt {
+  margin-top: 16px;
+}
+.card {
+  border-radius: var(--radius);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92),
+    rgba(255, 255, 255, 0.86)
+  );
+  border: var(--ring);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.cardTitle {
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.mapRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  display: grid;
+  gap: 6px;
+}
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid rgba(214, 51, 132, 0.12);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff8fc1;
+}
+.name {
+  font-weight: 800;
+  color: var(--ink);
+}
+.actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.del {
+  border: 0;
+  background: linear-gradient(180deg, #fff, #fff8fb);
+  border: 1px solid rgba(214, 51, 132, 0.22);
+  border-radius: 10px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.del:hover {
+  filter: brightness(0.98);
+}
+
+/* Edit row */
+.editRow {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+.editLeft {
+  display: grid;
+  gap: 8px;
+}
+.editRight {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+.label {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.imgPrev {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(214, 51, 132, 0.22);
+  background: #fff;
+}
+.imgInputRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.smallNote {
+  color: var(--muted);
+  font-size: 12px;
+}
+.editBtns {
+  display: flex;
+  gap: 8px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: start;
+}
+.formCol {
+  display: grid;
+  gap: 8px;
+}
+.input {
+  border-radius: 14px;
+  border: 1px solid rgba(214, 51, 132, 0.22);
+  padding: 10px 12px;
+  outline: none;
+  background: #fff;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.input:focus {
+  border-color: var(--pink-90);
+  box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.14);
+}
+
+.btn {
+  border-radius: 14px;
+  border: 0;
+  padding: 10px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, rgba(255, 111, 174, 0.7), rgba(246, 200, 165, 0.7))
+      border-box;
+  border: 1.5px solid transparent;
+  color: var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 36px rgba(255, 143, 193, 0.22);
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 920px) {
+  .mapRow {
+    grid-template-columns: 1fr;
+  }
+  .editRow {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .tile {
+    height: 170px;
+  }
+}
+
+/* shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

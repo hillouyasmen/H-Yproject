@@ -1,0 +1,304 @@
+/* ===== H&Y — Admin Dashboard “Harafi” Skin ===== */
+
+:root {
+  /* Brand */
+  --pink: #d63384;
+  --pink-soft: #ffe9f3;
+  --ink: #1d1f24;
+  --muted: #717585;
+
+  /* Surface & lines */
+  --bg: #fafafb;
+  --surface: #ffffff;
+  --surface-2: #fbfbfe;
+  --line: #ececf1;
+
+  /* FX */
+  --radius: 16px;
+  --shadow: 0 14px 40px rgba(214, 51, 132, 0.12);
+  --shadow-2: 0 18px 48px rgba(26, 28, 34, 0.12);
+
+  /* Accents */
+  --brand-2: #ff7ab8;
+  --gold: #c9a16a;
+}
+
+/* ===== Page shell with dreamy aurora ===== */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  padding-bottom: 18px;
+  background: var(--bg);
+}
+.wrap::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+      700px 280px at 12% 0%,
+      rgba(214, 51, 132, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 280px at 88% 4%,
+      rgba(255, 122, 184, 0.07),
+      transparent 60%
+    );
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+.title {
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2rem);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+.sub {
+  color: var(--muted);
+}
+
+/* ===== KPIs ===== */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+.kpi {
+  position: relative;
+  border-radius: var(--radius);
+  padding: 14px;
+  background: linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.35), rgba(255, 122, 184, 0.35))
+      border-box;
+  border: 1.5px solid transparent;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.16s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease, background 0.18s ease;
+}
+.kpi::after {
+  /* subtle glow */
+  content: "";
+  position: absolute;
+  inset: -20% -30% auto -30%;
+  height: 60%;
+  background: radial-gradient(
+    370px 170px at 20% 0%,
+    rgba(214, 51, 132, 0.08),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+.kpi:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+}
+
+.kpiLabel {
+  color: var(--muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.28px;
+  font-size: 0.78rem;
+}
+.kpiValue {
+  margin-top: 6px;
+  font-size: 1.7rem;
+  font-weight: 900;
+  line-height: 1.1;
+  background: linear-gradient(90deg, var(--pink), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.kpiFoot {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+/* Optional trend pill: add data-trend="up|down" to .kpi */
+.kpi[data-trend="up"] .kpiFoot {
+  color: #177245;
+}
+.kpi[data-trend="down"] .kpiFoot {
+  color: #8a2630;
+}
+
+/* Progress ring (optional): set --p:0~100 on .kpi to show conic gauge */
+.kpi[data-gauge] {
+  isolation: isolate;
+}
+.kpi[data-gauge]::before {
+  content: "";
+  position: absolute;
+  inset: 8px 8px auto auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: conic-gradient(
+      var(--pink) calc(var(--p, 0) * 1%),
+      rgba(214, 51, 132, 0.15) 0
+    ),
+    radial-gradient(#fff 60%, transparent 62%);
+  border: 1px solid rgba(214, 51, 132, 0.25);
+  box-shadow: 0 6px 14px rgba(214, 51, 132, 0.18);
+}
+
+/* ===== Cards & grid ===== */
+.grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  position: relative;
+  z-index: 1;
+}
+.card {
+  background: linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, rgba(214, 51, 132, 0.28), rgba(255, 122, 184, 0.28))
+      border-box;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.16s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+}
+
+.cardHead {
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 8px;
+  position: relative;
+}
+.cardHead::after {
+  /* underline accent */
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 46px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--pink), var(--brand-2));
+}
+
+/* Chart slot */
+.chart {
+  height: 260px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--surface-2), #fff);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 -18px 40px rgba(214, 51, 132, 0.04);
+  overflow: hidden;
+}
+
+/* Recharts tooltip (global) */
+.recharts-default-tooltip {
+  background: #fff !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12) !important;
+  color: var(--ink) !important;
+}
+
+/* ===== Skeletons (للحمل) ===== */
+.skel {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  min-height: 120px;
+  overflow: hidden;
+}
+.skelLine {
+  height: 12px;
+  margin: 10px 12px;
+  border-radius: 999px;
+  background: var(--pink-soft);
+}
+.skel::before,
+.skelLine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 1.1s infinite;
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* ===== Density toggle ===== */
+/* استخدم: <div class="wrap" data-density="compact">… */
+.wrap[data-density="compact"] .kpi {
+  padding: 12px;
+}
+.wrap[data-density="compact"] .kpiValue {
+  font-size: 1.4rem;
+}
+.wrap[data-density="compact"] .chart {
+  height: 220px;
+}
+
+/* ===== Dark theme (اختياري) ===== */
+/* ضع data-theme="dark" على عنصر .wrap */
+.wrap[data-theme="dark"] {
+  --bg: #121316;
+  --surface: #17181b;
+  --surface-2: #1b1d21;
+  --ink: #f2f3f5;
+  --muted: #a2a6ae;
+  --line: #2b2e34;
+  --shadow: 0 14px 40px rgba(0, 0, 0, 0.32);
+  --shadow-2: 0 20px 54px rgba(0, 0, 0, 0.44);
+}
+.wrap[data-theme="dark"] .recharts-default-tooltip {
+  background: #1b1d21 !important;
+  color: #f2f3f5 !important;
+  border-color: #2b2e34 !important;
+}
+
+/* ===== RTL polish ===== */
+[dir="rtl"] .cardHead::after {
+  left: auto;
+  right: 0;
+}
+[dir="rtl"] .kpi::before,
+[dir="rtl"] .kpi::after {
+  transform-origin: right top;
+}
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 720px) {
+  .chart {
+    height: 220px;
+  }
+}

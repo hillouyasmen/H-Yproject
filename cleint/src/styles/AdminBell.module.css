@@ -1,0 +1,129 @@
+/* src/styles/AdminBell.module.css */
+.wrap {
+  position: relative;
+}
+.bell {
+  position: relative;
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #eee);
+  border-radius: 999px;
+  padding: 8px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 800;
+}
+.icon {
+  font-size: 18px;
+  line-height: 1;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #9ca3af;
+}
+.dot[data-ok="1"] {
+  background: #16a34a;
+}
+.badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  background: #e11d48;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+}
+.panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 340px;
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #eee);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 50;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border, #eee);
+}
+.title {
+  font-weight: 900;
+}
+.close {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 360px;
+  overflow: auto;
+}
+.item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border, #f3f3f3);
+}
+.item:last-child {
+  border-bottom: 0;
+}
+.type {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  margin-top: 6px;
+  background: #9ca3af;
+}
+.type[data-type="user.created"] {
+  background: #6d28d9;
+}
+.type[data-type="order.created"] {
+  background: #22c55e;
+}
+.type[data-type="order.paid"] {
+  background: #0ea5e9;
+}
+.type[data-type="stock.low"] {
+  background: #e11d48;
+}
+.type[data-type="contact.created"] {
+  background: #f59e0b;
+}
+.text {
+  flex: 1;
+  min-width: 0;
+}
+.main {
+  font-weight: 700;
+}
+.time {
+  color: #6b7280;
+  font-size: 12px;
+}
+.empty {
+  padding: 16px;
+  color: #6b7280;
+  text-align: center;
+}

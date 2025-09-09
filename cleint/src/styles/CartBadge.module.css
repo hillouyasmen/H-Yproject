@@ -1,0 +1,45 @@
+.cartLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+.icon {
+  line-height: 1;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #e11d48; /* أحمر */
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(225, 29, 72, 0.5);
+  transform-origin: center;
+}
+
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bump {
+  animation: bump 0.3s ease;
+}

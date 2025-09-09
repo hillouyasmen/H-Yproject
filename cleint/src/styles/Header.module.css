@@ -1,0 +1,366 @@
+:root {
+  /* لوحة فحم + ذهب (مع بدائل إن ما كانت معرّفة عندك) */
+  --charcoal-900: var(--charcoal-900, #0f1012);
+  --charcoal-850: var(--charcoal-850, #14161a);
+  --charcoal-800: var(--charcoal-800, #191b20);
+  --charcoal-700: var(--charcoal-700, #1f2228);
+  --stone-200: var(--stone-200, #dcdde1);
+  --stone-300: var(--stone-300, #c9cacf);
+  --gold: var(--gold, #c9a96a);
+
+  --ink: var(--ink, #f2f3f5);
+  --muted: var(--muted, #a7aab0);
+  --shadow-up: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --ring: 0 0 0 3px rgba(201, 169, 106, 0.35);
+}
+
+/* ===== BAR ===== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: linear-gradient(
+      180deg,
+      rgba(20, 22, 26, 0.85),
+      rgba(15, 16, 18, 0.85)
+    ),
+    linear-gradient(180deg, var(--charcoal-850), var(--charcoal-900));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-up);
+  padding-bottom: 0; /* ينسّق مع نسخة الموبايل لاحقًا */
+}
+
+/* ===== WRAP ===== */
+.headWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 22px;
+}
+
+/* ===== BRAND ===== */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  font-size: 1.22rem;
+  letter-spacing: 0.2px;
+  color: var(--ink);
+}
+.brandLink {
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--gold), #e2cf9e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+/* ===== NAV ===== */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+.nav a {
+  position: relative;
+  color: var(--stone-300);
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.12s ease,
+    box-shadow 0.18s ease;
+}
+.nav a:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+.nav a.active {
+  color: #111;
+  background: linear-gradient(135deg, var(--gold), #e2cf9e 140%);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+/* ===== CTAs AREA ===== */
+.ctas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ===== CART ===== */
+.cartBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--charcoal-800);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+  transition: transform 0.16s ease, box-shadow 0.16s ease,
+    border-color 0.16s ease, background 0.16s ease;
+}
+.cartBtn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(201, 169, 106, 0.45);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+  background: var(--charcoal-700);
+}
+.cartIcon {
+  font-size: 18px;
+  color: var(--ink);
+}
+
+/* (اختياري) بادج عدّاد: فعّلها بإضافة data-count على الزر */
+.cartBtn[data-count]:after {
+  content: attr(data-count);
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--gold), #e2cf9e);
+  color: #111;
+  font-weight: 900;
+  font-size: 11px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
+}
+
+/* ===== PROFILE + LOGOUT ===== */
+.profileLink {
+  color: var(--stone-300);
+  text-decoration: none;
+  font-weight: 900;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.12s ease,
+    box-shadow 0.16s ease;
+}
+.profileLink:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--ink);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+.logoutBtn {
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold), #e2cf9e 140%);
+  color: #111;
+  border: none;
+  font-weight: 900;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+  transition: transform 0.12s ease, filter 0.12s ease;
+  cursor: pointer;
+}
+.logoutBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+}
+
+/* ===== Auth Links (Login / Register) ===== */
+.authLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 900;
+  padding: 9px 14px;
+  border-radius: 12px;
+  transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease,
+    border-color 0.12s ease, color 0.12s ease;
+  user-select: none;
+}
+.loginLink {
+  background: transparent;
+  color: var(--stone-300);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+.loginLink:hover {
+  transform: translateY(-1px);
+  border-color: rgba(201, 169, 106, 0.45);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+}
+.registerLink {
+  background: linear-gradient(135deg, var(--gold), #e2cf9e 140%);
+  color: #111;
+  border: none;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+.registerLink:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+}
+
+/* ===== Accessibility ===== */
+.authLink:focus-visible,
+.logoutBtn:focus-visible,
+.profileLink:focus-visible,
+.nav a:focus-visible,
+.cartBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .nav {
+    gap: 6px;
+  }
+}
+@media (max-width: 760px) {
+  .headWrap {
+    padding: 10px 14px;
+  }
+  .nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -44px;
+    gap: 8px;
+    padding: 8px 10px;
+    background: var(--charcoal-800);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+  }
+  .header {
+    padding-bottom: 48px;
+  } /* reserve space for floating nav */
+}
+
+/* احترام تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  .nav a,
+  .cartBtn,
+  .logoutBtn,
+  .profileLink,
+  .authLink {
+    transition: none !important;
+  }
+}
+/* زر السلة + البادج الأحمر */
+.cartBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 9999px;
+  transition: transform 120ms ease;
+}
+.cartBtn:hover {
+  transform: translateY(-1px);
+}
+
+.cartIcon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #e11d48; /* أحمر */
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(225, 29, 72, 0.5);
+  transform-origin: center;
+  z-index: 1;
+}
+
+/* نبضة عند الزيادة */
+@keyframes cartBump {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.bump {
+  animation: cartBump 0.3s ease;
+}
+/* src/styles/Header.module.css (مقتطفات) */
+.cartBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  min-width: 36px;
+  padding: 0 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.cartIcon {
+  font-size: 18px;
+}
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  transform: scale(1);
+  transition: transform 0.15s ease;
+}
+.bump {
+  animation: bump 0.3s ease;
+}
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
